@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="desubuddy:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/desubuddy_jar</output-path>
+    <root id="archive" name="desubuddy.jar">
+      <element id="module-output" name="desubuddy" />
+    </root>
+  </artifact>
+</component>
