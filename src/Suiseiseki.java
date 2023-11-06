@@ -11,14 +11,16 @@ import javax.imageio.ImageIO;
 class DraggableFrame extends JFrame {
     private long lastClickTime = 0;
     private int initialX, initialY, initialMouseX, initialMouseY;
+    private String[] dolls = {"buddies/suiseiseki/", "buddies/suigintou/"};
+    private int currentDollIndex = 0; // suiseiseki = 0, suigintou = 1
     private String[] imageFiles = {"0.gif", "1.gif", "2.gif", "3.gif", "4.gif"};
-    private String[] soundFiles = {"desu1.wav", "desu2.wav", "desu3.wav", "close.wav"};
+    private String[] soundFiles = {"click1.wav", "click2.wav", "click3.wav", "close.wav"};
     private int currentImageIndex = 0;
     private javax.sound.sampled.Clip closeClip;
     private CustomPanel customPanel;
 
     private void defaultLogic() throws InterruptedException {
-        BufferedImage img = loadImage("buddies/suiseiseki/images/blink/" + imageFiles[0]);
+        BufferedImage img = loadImage(dolls[currentDollIndex] + "images/blink/" + imageFiles[0]);
         if (img != null) {
             customPanel.setImage(img);
         }
@@ -30,7 +32,7 @@ class DraggableFrame extends JFrame {
     private void blink() throws InterruptedException {
         while (true) {
             for (int i = 0; i < imageFiles.length; i++) {
-                BufferedImage img = loadImage("buddies/suiseiseki/images/blink/" + imageFiles[i]);
+                BufferedImage img = loadImage(dolls[currentDollIndex] + "images/blink/" + imageFiles[i]);
                 if (img != null) {
                     customPanel.setImage(img);
                 }
@@ -42,7 +44,7 @@ class DraggableFrame extends JFrame {
 
     DraggableFrame() {
         try {
-            File closeSoundFile = new File("buddies/suiseiseki/sounds/close.wav");
+            File closeSoundFile = new File(dolls[currentDollIndex] + "sounds/close.wav");
             if (closeSoundFile.exists()) {
                 javax.sound.sampled.AudioInputStream audioIn = javax.sound.sampled.AudioSystem.getAudioInputStream(closeSoundFile);
                 closeClip = javax.sound.sampled.AudioSystem.getClip();
@@ -117,8 +119,8 @@ class DraggableFrame extends JFrame {
 
     private void showPopupMenu(Component component, int x, int y) {
         try {
-            String soundFileName = "buddies/suiseiseki/sounds/" + soundFiles[ThreadLocalRandom.current().nextInt(0, 3)];
-            while (soundFileName.equals("buddies/suiseiseki/sounds/close.wav")) {
+            String soundFileName = dolls[currentDollIndex] + "sounds/" + soundFiles[ThreadLocalRandom.current().nextInt(0, 3)];
+            while (soundFileName.equals(dolls[currentDollIndex] + "sounds/close.wav")) {
                 soundFileName = "sounds/" + soundFiles[ThreadLocalRandom.current().nextInt(0, 3)];
             }
             File soundFile = new File(soundFileName);
